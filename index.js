@@ -38,7 +38,7 @@ async function run() {
       const package = await packagesCollection.findOne(query);
       res.json(package);
     });
-    // post to insert
+    // post to insert package in DB
     app.post("/packages", async (req, res) => {
       const package = req.body;
       const result = await packagesCollection.insertOne(package);
@@ -50,8 +50,8 @@ async function run() {
       const result = await ordersCollection.insertOne(order);
       // console.log("my dream email", order?.data?.email);
       res.json(result);
-      // send order mail information
-      sendMail(order?.data?.email);
+      // send order mail information hiroku server not supported but work this
+      // sendMail(order?.data?.email);
     });
     //get api
     app.get("/orders", async (req, res) => {
@@ -91,49 +91,49 @@ async function run() {
   }
 }
 run().catch(console.dir);
-// bulk mail send
-const sendMail = (email) => {
-  var transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: `${process.env.EMAIL_NAME}`,
-      pass: `${process.env.EMAIL_PASS}`,
-    },
-  });
-  var mailOptions = {
-    from: "mhhakim65@gmail.com",
-    to: `${email}`,
-    subject: "Order Confirmation Email",
-    text: "",
-    html: `<div>        
-        <h3>
-          Your order go to info save in our database .you will shortly get update about your order status.
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa autem
-          deserunt suscipit numquam, fugiat officia odit dolore nulla aliquid
-          neque aspernatur quibusdam ea ut eligendi magni possimus quam alias
-          perspiciatis? Similique inventore praesentium, odit reprehenderit
-          impedit, sunt magni, quasi totam corrupti hic iste quo? Quisquam
-          dolore excepturi rerum nam, vitae possimus repellendus aut optio esse
-          ea expedita, nihil quae, impedit ducimus corrupti eaque deleniti
-          quibusdam voluptates recusandae facilis accusamus sequi! Cumque
-          reiciendis, cupiditate culpa ratione commodi ipsum eius error minima,
-          debitis, pariatur harum doloremque nemo totam numquam aut! Rerum
-          laborum dolore temporibus saepe rem fuga. Reiciendis dolor sunt
-          veritatis beatae.
-        </p>
-      </div>`,
-  };
+// bulk mail send "work successfully when i face problem in HEROKU server then commented it"
+// const sendMail = (email) => {
+//   var transporter = nodemailer.createTransport({
+//     service: "gmail",
+//     auth: {
+//       user: `${process.env.EMAIL_NAME}`,
+//       pass: `${process.env.EMAIL_PASS}`,
+//     },
+//   });
+//   var mailOptions = {
+//     from: "mhhakim65@gmail.com",
+//     to: `${email}`,
+//     subject: "Order Confirmation Email",
+//     text: "",
+//     html: `<div>
+//         <h3>
+//           Your order go to info save in our database .you will shortly get update about your order status.
+//         </h3>
+//         <p>
+//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa autem
+//           deserunt suscipit numquam, fugiat officia odit dolore nulla aliquid
+//           neque aspernatur quibusdam ea ut eligendi magni possimus quam alias
+//           perspiciatis? Similique inventore praesentium, odit reprehenderit
+//           impedit, sunt magni, quasi totam corrupti hic iste quo? Quisquam
+//           dolore excepturi rerum nam, vitae possimus repellendus aut optio esse
+//           ea expedita, nihil quae, impedit ducimus corrupti eaque deleniti
+//           quibusdam voluptates recusandae facilis accusamus sequi! Cumque
+//           reiciendis, cupiditate culpa ratione commodi ipsum eius error minima,
+//           debitis, pariatur harum doloremque nemo totam numquam aut! Rerum
+//           laborum dolore temporibus saepe rem fuga. Reiciendis dolor sunt
+//           veritatis beatae.
+//         </p>
+//       </div>`,
+//   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
-    }
-  });
-};
+//   transporter.sendMail(mailOptions, function (error, info) {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log("Email sent: " + info.response);
+//     }
+//   });
+// };
 app.get("/", (req, res) => {
   res.send("Running TourBd Server.");
 });
